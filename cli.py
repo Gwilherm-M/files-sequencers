@@ -7,10 +7,10 @@ from sequencers import files_sequences
 FORMAT = "%(asctime)s %(levelname)s %(message)s"
 log.basicConfig(
     format=FORMAT,
-    # level=log.INFO,
+    level=log.INFO,
     filemode="w",
 )
-# if __name__ == "__main__":
+
 parser = argparse.ArgumentParser(
     description="Reformate view of seqences files."
 )
@@ -33,7 +33,3 @@ elif not path.exists():
 
 files = (str(path_f.name) for path_f in path.iterdir())
 pprint(files_sequences.format_sequences(files))
-
-# from package_a.main import main
-# if __name__ == '__main__':
-#     main()
