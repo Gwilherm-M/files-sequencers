@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from configparser import NoOptionError
 from lib2to3.pgen2.token import OP
 from pprint import pprint
@@ -20,10 +22,23 @@ class Sequence(SequenceModel):
         super(Sequence, self).__init__(*args, **kwargs)
 
     def __str__(self) -> str:
+        """Other Format
+
+        Returns:
+            str: Return cont, name, range
+        """
         range = self.generate_range()
         return "{count}  {name}  {range}".format(**self.dict(), range=range)
 
-    def __add__(self, file_format: SequenceModel) -> SequenceModel:
+    def __add__(self, file_format: Sequence) -> Sequence:
+        """Additional Obj
+
+        Args:
+            file_format (Sequence): Obj Sequence or Sequence.
+
+        Returns:
+            Sequence: Return Obj Sequence
+        """
         regex = False
         varians = self.varians.union(file_format.varians)
         count = len(varians)
@@ -41,6 +56,11 @@ class Sequence(SequenceModel):
         return Sequence(name=name, varians=varians, count=count, regex=regex)
 
     def generate_range(self) -> str:
+        """Generate a String Range.
+
+        Returns:
+            str: Return string of all varians.
+        """
         if not self.varians:
             return ""
 
@@ -60,6 +80,15 @@ class Sequence(SequenceModel):
 
 
 def groups_to_regex(groups: Tuple, varian: str) -> str:
+    """Generate a regex of groups file name
+
+    Args:
+        groups (Tuple): A groups of file name.
+        varian (str): Varian of groups.
+
+    Returns:
+        str: Return regex of file name.
+    """
     name = "".join(groups)
     regex = "%d"
     if len(varian) > 1 and varian[0] == "0":
@@ -70,6 +99,15 @@ def groups_to_regex(groups: Tuple, varian: str) -> str:
 
 
 def contiguous_groups(group_a: Tuple, group_b: Tuple) -> Tuple[str, int, int]:
+    """Is Contiguous Groups
+
+    Args:
+        group_a (Tuple): File name split ex ("file", "01", "_", "0040", ".rgb")
+        group_b (Tuple): File name split ex ("file", "01", "_", "0041", ".rgb")
+
+    Returns:
+        Tuple[str, int, int]: If contiguous return regex, varians
+    """
     if len(group_a) != len(group_b):
         return ()
 
@@ -94,6 +132,15 @@ def contiguous_groups(group_a: Tuple, group_b: Tuple) -> Tuple[str, int, int]:
 
 
 def generate_obj_sequence(file_a: str, file_b: str) -> Sequence:
+    """Generate Obj Sequence
+
+    Args:
+        file_a (str): File name.
+        file_b (str): File name.
+
+    Returns:
+        Sequence: Return obj Sequence
+    """
     groups_a = re.findall("(\d+|\D+)", file_a)
     groups_b = re.findall("(\d+|\D+)", file_b)
 
@@ -109,6 +156,14 @@ def generate_obj_sequence(file_a: str, file_b: str) -> Sequence:
 
 
 def format_sequences(files: List[str] = []) -> List[Tuple[int, str, str]]:
+    """Format Sequences
+
+    Args:
+        files (List[str], optional): List of file name. Defaults to [].
+
+    Returns:
+        List[Tuple[int, str, str]]: Return list of counter, regex, range.
+    """
     data: Dict[Sequence] = {}
     last_obj: Sequence = Sequence()
     last_file: str = ""
@@ -141,9 +196,5 @@ def format_sequences(files: List[str] = []) -> List[Tuple[int, str, str]]:
     for regex, datum in data.items():
         range = datum.generate_range()
         result.append((datum.count, regex, range))
-        # result.append(str(datum))
-
-    # if result:
-    #     result.sort(key=lambda x: x[1])
 
     return result
