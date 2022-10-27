@@ -2,7 +2,7 @@
 
 Offre à l'utilisateur la possibilité d'explorer le contenu d'un dossier en concaténant visuellement toutes les versions d'un même nom de fichier entre eux.
 
-## Example:
+## Exemple:
 
 En entrée:
 
@@ -39,17 +39,17 @@ En sortie:
 
 ## Quick Install
 
-Un fichier Makefile est disponible, mais utilisable uniquement sur **Windows**.
+Un fichier Makefile est disponible, mais utilisable uniquement sous **Windows**.
 
-| Command | Description |
+| Commandes | Descriptions |
 |---------| ----------- |
-| `make install` | Installe un environement python 3 et touts les modules. |
+| `make install` | Installe un environement python 3 et tous les modules. |
 | `make tests` | Execute les tests unitaires. |
-| `make build` | Génère un executable dans le dossier bin. |
+| `make build` | Génère un exécutable dans le dossier bin. |
 
 ## Usage
 
-| Command | Description |
+| Commandes | Descriptions |
 |---------| ----------- |
-| `-p` ou `--path` | Si aucun path n'est rentré (ou ".") le path courent est automatiquement choisi. |
-| `-h` ou `--help` | Visualiser l'aide des commands. |
+| `-p` ou `--path` | Si aucun path n'est rentré (ou ".") le path courant est automatiquement choisi. |
+| `-h` ou `--help` | Visualiser l'aide des commandes. |
